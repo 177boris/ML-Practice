@@ -2,7 +2,7 @@
 
 import numpy as np
 import json
-import BaseHTTPServer
+import http.server
 from ocr import OCRNeuralNetwork
 
 
@@ -23,7 +23,7 @@ data_labels = data_labels.tolist()
 nn = OCRNeuralNetwork(HIDDEN_NODE_COUNT, data_matrix, data_labels, list(range(5000)));
 
 
-class JSONHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class JSONHandler(http.server.BaseHTTPRequestHandler):
 
     def do_POST(s):
             response_code = 200
@@ -57,7 +57,7 @@ class JSONHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    server_class = BaseHTTPServer.HTTPServer
+    server_class = http.server.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), JSONHandler)
 
     try:
